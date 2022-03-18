@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/xadmin.js"></script>
+
+</head>
+<body class="login-bg">
+<div class="login">
+    <div class="message">xx系统-管理登录</div>
+    <div id="darkbannerwrap"></div>
+    <form method="post" class="layui-form" id="userForm">
+        <input name="sno" placeholder="tno"  type="text" lay-verify="required" class="layui-input" >
+        <hr class="hr15">
+        <input name="tname" lay-verify="required" placeholder="tname"  type="text" class="layui-input">
+        <hr class="hr15">
+        <input name="tsex" placeholder="tsex"  type="text" lay-verify="required" class="layui-input" >
+        <hr class="hr15">
+        <input name="Political_outlook" lay-verify="required" placeholder="Political_outlook"  type="text" class="layui-input">
+        <hr class="hr15">
+        <input name="title" lay-verify="required" placeholder="title"  type="text" class="layui-input">
+        <hr class="hr15">
+        <input name="college" lay-verify="required" placeholder="college"  type="text" class="layui-input">
+        <hr class="hr15">
+        <input name="education" lay-verify="required" placeholder="education"  type="text" class="layui-input">
+        <hr class="hr15">
+        <input name="mail" lay-verify="required" placeholder="mail"  type="text" class="layui-input">
+        <hr class="hr15">
+        <input name="pnum" lay-verify="required" placeholder="pnum"  type="text" class="layui-input">
+        <hr class="hr15">
+        <input name="remarks"  placeholder="remarks"  type="text" class="layui-input">
+        <hr class="hr15">
+        <input name="tpwd"  placeholder="tpwd"  type="password" class="layui-input">
+        <hr class="hr15">
+        <span id="info" style="color:red"></span>
+        <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
+
+    </form>
+
+</div>
+</body>
+</html>
+
+<script>
+    $(function  () {
+        layui.use('form', function(){
+            var form = layui.form;
+            //监听提交
+            form.on('submit(login)', function(data){
+
+                /*  layer.msg(JSON.stringify(data.field),function(){
+                      location.href='index.html'*/
+                $.ajax({
+                    url:"/user/delstudent",
+                    type:"post",
+                    data:data.field,
+                    dataType:"json",//返回的是json数据类型
+                    success:function (data) {
+                        $("#info").text(data.info);
+                        }
+                })
+                return false;
+            });
+        });
+    })
+</script>

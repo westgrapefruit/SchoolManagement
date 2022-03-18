@@ -1,0 +1,92 @@
+<!--教师的学生成绩页面-->
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="../css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/xadmin.js"></script>
+    <script src="../js/my.js"></script>
+</head>
+<body>
+	
+
+        <table  class="layui-table">
+            <thead>
+            	<th>学号</th>
+            	<th>姓名</th>
+                <th>课程最高分</th>
+                <th>课程平均分</th>
+               <th>该生得分</th>
+              
+               
+                 
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+      <!-- <div style="position: absolute;left: 30%;">
+         <button class="layui-btn layui-btn-normal" type="button" onclick="pre()" >上一页</button>
+         <button class="layui-btn layui-btn-normal" type="button" onclick="next()">下一页</button>
+           一共有<span id="total"></span>条数据
+            一共有<span id="totalPage"></span>页
+            当前第<span id="num"></span>页
+        </div>-->
+</body>
+</html>
+<script>
+	
+	$(function(){
+		//加载表格
+		loadData();
+	})
+	
+
+	
+	//用户选择的查询条件
+	var condition="";
+	//用户输入的查询值
+	var conValue="";
+	var url=window.location.href
+	var my=url.split("=");
+	
+	var tno=parent.window.Tno
+	var cno=my[1];
+	
+	console.log(cno)//获取父页面的cno值
+	//加载表格数据
+	function loadData(){
+		$.ajax({
+                url:address+"/GradesManagement/queryGradesBySnoAndCnoAndTnoAndClassno",
+                type:"post",
+                data:{"cno":cno,"tno":tno},
+                dataType:"json",
+                success:function(data){
+                	var html = "";
+                	console.log(data.list);
+                	//遍历分页集合
+                	for(var i =0;i<data.list.length;i++){
+                	html+="<tr>"
+                				+"<td>"+data.list[i].sname+"</td>"
+                				+"<td>"+data.list[i].sno+"</td>"			
+								+"<td>"+data.list[i].maxscore+"</td>"
+                				+"<td>"+data.list[i].pscore+"</td>"
+                				+"<td>"+data.list[i].score+"</td>"
+                			   +"</tr>"
+                	}             	
+                $("tbody").html(html);
+                	
+                	
+                }
+            })
+	}
+	
+   
+ 
+
+
+
+
+</script>

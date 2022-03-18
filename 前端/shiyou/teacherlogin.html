@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" href="img/Favicon.png" type="image/x-icon">
+		<title>Season</title>
+
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/timer.js"></script>
+		<script type="text/javascript" src="js/script.js"></script>
+		<script src="js/my.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+		<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="css/custom.css">
+		
+	</head>
+
+
+	<body onload="countdown(year,month,day,hour,minute)">
+		
+
+		<div class= "body-content">
+			<!-- subscribe -->
+			<div class= "container subscribe">
+				<div class="row text-center">
+					<div class= "col-lg-6 col-lg-offset-3 subscribe-text">
+						<h3 class= "text-center">Subscribe us</h3>
+						<hr class= "full">
+	                	<p>Welcome to our world of technology</p>
+	                	<br/>
+					</div>
+				</div>
+			</div><!-- end of subscribe -->
+			<div class= "container after-slide">
+				<div class= "row">
+					<div class="col-md-6 col-md-offset-3 col-lg-8 col-lg-offset-2 col-sm-12 col-xs-12 text-center">
+						<p class= "after-slide-text">Our website is under construction. We`ll be here soon with our new site.</p>
+					</div>
+				</div>
+				<div class="subscribe-form" >
+					<div class= "row">
+						<div class="input-group margin-bottom-sm col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 text-center">
+						  	<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+						  	<input class="form-control" id="tno" type="text" placeholder="Please input your ID">
+						</div>
+						<div class="input-group col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 text-center form">
+						  	<span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+						  	<input class="form-control" id="tpwd" type="password" placeholder="Password">
+						</div>
+						<div class="input-group margin-bottom-sm col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+							<button type="button" class="btn btn-info" onclick="ddd()">Subscribe</button>
+						</div>
+					</div>
+				</div>
+			</div><!-- end of after slide part -->
+
+	        <!-- share part -->
+	      	<div class="container share">
+				<div class="row text-center">
+					<div class= "col-lg-6 col-lg-offset-3 share-text">
+						<h3 class= "text-center">Stay Connected</h3>
+						<hr class= "full">
+	                	<p>We want to connect people like you.</p>
+	                	<br/>
+					</div>
+				</div>
+			</div>
+			<div class= "container share-icons text-center">
+				<div class= "row text-center">
+					<div class= "col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<ul class="socials-icons col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<li>
+								<a href="#" data-toggle="tooltip" title="Share in Facebook" class="facebook"><i class="fa fa-facebook"></i></a>
+							</li>
+							<li>
+								<a href="#" data-toggle="tooltip" title="Share in Twitter" class="twitter"><i class="fa fa-twitter"></i></a>
+							</li>
+							<li>
+								<a href="#" data-toggle="tooltip" title="Share in Google +" class="google-plus"><i class="fa fa-google-plus"></i></a>
+							</li>
+							<li>
+								<a href="#" data-toggle="tooltip" title="Share in Instagram" class="instagram"><i class="fa fa-instagram"></i></a>
+							</li>
+							<li>
+								<a href="#" data-toggle="tooltip" title="Share in Pinterest" class="pinterest"><i class="fa fa-pinterest"></i></a>
+							</li>
+							<li>
+								<a href="#" data-toggle="tooltip" title="Connect with Skype" class="skype"><i class="fa fa-skype"></i></a>
+							</li>
+						</ul> 
+					</div>
+				</div>
+			</div><!-- end of share part -->
+	    </div><!-- end of body content -->
+		<!-- footer -->
+		<div class="wrapper footer">
+			<div class="container">
+				<div class="row text-center">
+					<div class="name col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center">
+						<h1>Season</h1>
+					</div>
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-center">
+						<div class="copyright">
+							&copy; Copyright 2020  在线码农.
+						</div>
+					</div>
+					<div class= "col-lg-2 col-md-2 col-sm-2 col-xs-12" id="back-top">
+						<p class= "pull-right"><a href="#home"><span></span>Top</a></p>	
+					</div>	
+				</div><!-- row -->
+			</div>
+		</div><!--end of footer -->
+	</body>
+</html>
+
+<script>
+
+    
+    function ddd(){
+    	var tno = $("#tno").val();
+    	var tpwd = $("#tpwd").val();
+        
+               $.ajax({
+                url:address+"/login/teacherlogin",
+                type:"post",
+                data:{"tno":tno,"tpwd":tpwd},
+                dataType:"json",//返回的数据类型
+                success:function(data){
+                	console.log(data)
+                    //定义{info:"登录成功"}
+                    $("#info").text(data.info);
+                    if(data.info=="登录成功"){
+                    	alert(data.info);
+                        window.location.href="./teacher/T_index.html?tno="+tno;
+                    }else
+                    {
+                    	alert(data.info);
+                    }
+
+                }
+
+            })
+        
+    }
+ 
+</script>

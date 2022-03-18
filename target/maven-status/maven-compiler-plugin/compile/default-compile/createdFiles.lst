@@ -1,0 +1,16 @@
+com\swpu\dao\ClassManagementDao.class
+com\swpu\controller\GradesManagementController.class
+com\swpu\controller\UserController.class
+com\swpu\pojo\Classes.class
+com\swpu\pojo\Page.class
+com\swpu\service\ICourseManagementService.class
+com\swpu\serviceIpml\ClassManagementServiceImpl.class
+com\swpu\serviceIpml\UserServiceImpl.class
+com\swpu\serviceIpml\GradesManagementServiceImpl.class
+com\swpu\serviceIpml\CourseManagementServiceImpl.class
+com\swpu\controller\CourseManagementController.class
+com\swpu\controller\ClassManagementController.class
+com\swpu\pojo\TeacherCourse.class
+com\swpu\service\IGradesManagementService.class
+com\swpu\service\IClassManagementService.class
+com\swpu\dao\GradesManagementDao.class

@@ -1,0 +1,150 @@
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>课程列表</title>
+    <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="../css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/xadmin.js"></script>
+    <script src="../js/my.js"></script>
+</head>
+<body>
+	
+
+   
+
+	
+
+<!--<form class="x-so"  id="myform" >
+    <select id="condition" name="condition" style="width: 100px;height: 37px">
+        <option value="----">----</option>
+        <option value="编号">课程编号</option>
+        <option value="用户名">姓名</option>
+    </select>
+    <input class="layui-input" name="conValue"  type="text" id="conValue" placeholder="请输入查询条件">
+    <input type="button" class="layui-btn layui-btn-normal" onclick="search()" value="查询" >
+</form>-->
+
+
+        <table  class="layui-table">
+            <thead>
+            	<th>课程名</th>
+                <th>课序号</th>
+                <th>上课地点</th>
+                 <th>学期</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+      <!--  <div style="position: absolute;left: 30%;">
+         <button class="layui-btn layui-btn-normal" type="button" onclick="pre()" >上一页</button>
+         <button class="layui-btn layui-btn-normal" type="button" onclick="next()">下一页</button>
+           一共有<span id="total"></span>条数据
+            一共有<span id="totalPage"></span>页
+            当前第<span id="num"></span>页
+        </div>-->
+</body>
+</html>
+<script>
+	
+	$(function(){
+		//加载表格
+		loadData();
+	})
+	
+	//上一页
+	function pre(){
+		page = prePage;
+		loadData();
+	}
+	//下一页
+	function next(){
+		page = nextPage;
+		loadData();
+	}
+	//页吗
+	var page = 1;
+	//每页显示条数
+	var row  = 10;
+	//上一页吗
+	var prePage=0;
+	//下一页吗
+	var nextPage=0;
+	
+	//用户选择的查询条件
+	var condition="";
+	//用户输入的查询值
+	var conValue="";
+	var url=parent.window.Url
+	var my=url.split("=");
+	
+	//$("#userId").val(my[1].split("&")[0])
+	var Sno=my[1];
+	//console.log(Sno)//获取父页面的sno值
+	//加载表格数据
+	function loadData(){
+		$.ajax({
+                url:address+"/courseManagement/queryAllLearnCourse",
+                type:"get",
+                data:{"sno":Sno,"page":page,"row":row,"condition":condition,"conValue":conValue},
+                dataType:"json",
+                success:function(data){
+                	var html = "";
+                	//遍历分页集合
+                	for(var i =0;i<data.list.length;i++){	
+                		html+="<tr>"
+                				+"<td>"+data.list[i].cname+"</td>"
+                				+"<td>"+data.list[i].cno+"</td>"
+                				+"<td>"+data.list2[i].site+"</td>"
+                				+"<td>"+data.list[i].semester+"</td>"              				
+                		
+                			   +"</tr>"
+                	}             	
+                	$("tbody").html(html);
+                	//赋值分页数据
+                	$("#total").text(data.total);
+                	$("#totalPage").text(data.totalPage);
+                	$("#num").text(data.num);
+                	prePage = data.pre;
+                	nextPage = data.next;
+                	
+                	
+                }
+            })
+	}
+	
+ 
+ 
+
+
+    //查询验证
+    function search(){
+        //获取用户输入的查询条件
+        var v = $("#conValue").val();
+        //获取用户选择的查询
+        var con = $("#condition").val();
+        //判断用户选择的查询条件
+        if(con=="课程编号"){
+            //创建一个正则表达式对象
+            var re = /^[0-9]*$/;
+            //验证用户输入的信息是否是数字
+            if(re.test(v)){
+          		condition = con;
+          		conValue = v;
+          		loadData();
+          		
+            }else{
+                layer.alert("请输入数字")
+            }
+
+
+        }else{
+            	condition = con;
+          		conValue = v;
+          		loadData();
+        }
+    }
+
+</script>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table class="layui-table">
+    <thead>
+    <th>编号</th>
+    <th>用户名</th>
+    <th>密码</th>
+    <th>修改</th>
+    </thead>
+    <tbody>
+    <tr th:each="i:${info.list}">
+        <td th:text="${i.tno}"></td>
+        <td th:text="${i.tname}"></td>
+    </tr>
+    </tbody>
+</table>
+<div style="position:absolute;left: 70%">
+    <a th:href="@{/user/userlist(page=${info.pre})}" class="layui-btn layui-btn-mini" >上一页</a>
+    第<span th:text="${info.num}"></span>页
+    <a th:href="@{/user/userlist(page=${info.next})}" class="layui-btn layui-btn-mini" >下一页</a>
+    共<span th:text="${info.total}"></span>条数据
+    共<span th:text="${info.totalPage}"></span>页
+</div>
+</body>
+</html>

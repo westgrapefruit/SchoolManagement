@@ -1,0 +1,224 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="../css/xadmin.css">
+    <link rel="stylesheet" href="../css/select.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/xadmin.js"></script>
+    <script src="../js/my.js"></script>
+</head>
+<body>
+	<!-- <button class="layui-btn" type="submit" onclick="x_admin_show('导入excel','studentexcel.html',300,300)" ><i class="layui-icon"></i>导入excel</button>
+<form class="x-so"  id="myform" >
+    <select id="condition" name="condition" style="width: 100px;height: 37px">
+        <option value="----">----</option>
+        <option value="学号">学号</option>
+        <option value="用户名">姓名</option>
+    </select>
+    <input class="layui-input" name="conValue"  type="text" id="conValue" placeholder="请输入查询条件">
+    <!--<input type="submit" class="layui-btn layui-btn-normal" value="查询" >-->
+    <!--<input type="button" class="layui-btn layui-btn-normal" onclick="search()" value="查询" >
+</form>-->
+
+
+
+<!--<button class="layui-btn layui-btn-normal" type="button" onclick="x_admin_show('用户新增','S-add.html')">新增</button>-->
+
+<div style="width: 200px; display: flex;justify-content: space-between;align-items: center;">
+    	<button class="layui-btn layui-btn-normal" onclick="x_admin_show('导入excel','studentexcel.html')" >
+    		<i class="layui-icon"></i>
+    		导入excel
+    	</button>
+    	<button class="layui-btn layui-btn-normal" type="button" onclick="x_admin_show('用户新增','S-add.html')">新增</button>
+		<form class="x-so sel"  id="myform" style="" >
+		    <select id="condition" name="condition" style="width: 100px;height: 37px">
+		        <option value="----">----</option>
+		        <option value="编号">学号</option>
+		        <option value="用户名">姓名</option>
+		    </select>
+		    <input class="layui-input" name="conValue"  type="text" id="conValue" placeholder="请输入查询条件">
+		    <!--<input type="submit" class="layui-btn layui-btn-normal" value="查询" >-->
+		    <input type="button" class="layui-btn layui-btn-normal" onclick="search()" value="查询" >
+		</form>
+	</div>
+        <table  class="layui-table">
+            <thead>
+                <th>学院</th>
+                <th>年级</th>
+                <th>班级编号</th>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                 <th>电话号码</th>
+                  <th>邮箱</th>
+                   <th>专业</th>
+                    <th>操作</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div style="position: absolute;left: 30%;">
+         <button class="layui-btn layui-btn-normal" type="button" onclick="pre()" >上一页</button>
+         <button class="layui-btn layui-btn-normal" type="button" onclick="next()">下一页</button>
+            一共有<span id="total"></span>条数据
+            一共有<span id="totalPage"></span>页
+            当前第<span id="num"></span>页
+        </div>
+</body>
+</html>
+<script>
+	
+	$(function(){
+		//加载表格
+		loadData();
+	})
+	
+	//上一页
+	function pre(){
+		page = prePage;
+		loadData();
+	}
+	//下一页
+	function next(){
+		page = nextPage;
+		loadData();
+	}
+	//页吗
+	var page = 1;
+	//每页显示条数
+	var row  = 10;
+	//上一页吗
+	var prePage=0;
+	//下一页吗
+	var nextPage=0;
+	
+	//用户选择的查询条件
+	var condition="";
+	//用户输入的查询值
+	var conValue="";
+	
+	//加载表格数据
+	function loadData(){
+		$.ajax({
+                url:address+"/user/selstudents",
+                type:"get",
+                data:{"page":page,"row":row,"condition":condition,"conValue":conValue},
+                dataType:"json",
+                success:function(data){
+                	var html = "";
+                	//遍历分页集合
+                	for(var i =0;i<data.list.length;i++){
+                		html+="<tr>"
+                				+"<td>"+data.list[i].college+"</td>"
+                				+"<td>"+data.list[i].grade+"</td>"
+                				+"<td>"+data.list[i].classno+"</td>"
+                				+"<td>"+data.list[i].sno+"</td>"
+                				+"<td>"+data.list[i].name+"</td>"
+                				+"<td>"+data.list[i].sex+"</td>"
+                				+"<td>"+data.list[i].pnum+"</td>"
+                				+"<td>"+data.list[i].mail+"</td>"
+                			
+                				+"<td>"+data.list[i].major+"</td>"
+                				+"<td>"
+                				+"<button class='layui-btn layui-btn-norma' type='button' onclick='update(this)'>修改</button>"
+                                +"<button class='layui-btn layui-btn-normal' type='button' onclick='delUser(this)'>删除</button>"
+                				+"</td>"
+                			   +"</tr>"
+                	}
+                	
+                	$("tbody").html(html);
+                	//赋值分页数据
+                	$("#total").text(data.total);
+                	$("#totalPage").text(data.totalPage);
+                	$("#num").text(data.num);
+                	
+                	prePage = data.pre;
+                	nextPage = data.next;
+                	
+                	
+                }
+            })
+	}
+	
+    //打开修改页面的方法
+    function update(obj){
+        //获取当前选中行的userId值
+        var college=$(obj).parent().parent().find("td").eq(0).text();
+        var grade=$(obj).parent().parent().find("td").eq(1).text();
+        var classno=$(obj).parent().parent().find("td").eq(2).text();
+        var sno = $(obj).parent().parent().find("td").eq(3).text();
+        
+        var name = $(obj).parent().parent().find("td").eq(4).text();
+        //打开修改弹窗
+        var sex=$(obj).parent().parent().find("td").eq(5).text();
+        var pnum=$(obj).parent().parent().find("td").eq(6).text();
+         var mail= $(obj).parent().parent().find("td").eq(7).text();
+      
+       var major=$(obj).parent().parent().find("td").eq(8).text();
+       
+        var s=encodeURI("S-edit.html?college="+college+"&classno="+classno+"&grade="+grade+"&sno="+sno+"&name="+name+"&sex="+sex+
+        "&pnum="+pnum+"&mail="+mail+"&major="+major)
+        x_admin_show("修改",s,500,400);
+
+    }
+    //删除
+    function delUser(obj){
+        //获取当前选中行的userId值
+        var sno = $(obj).parent().parent().find("td").eq(3).text();
+        //用提示框确定用户是否删除
+        layer.confirm("你确定要删除吗?",{icon:3,title:"警告"},function(index){
+            $.ajax({
+                url:address+"/user/delstudent",
+                type:"get",
+                data:{"sno":sno},
+                dataType:"json",
+                success:function(data){
+                    layer.alert(data.info,function(){
+                     layer.close(layer.index);
+                        //刷新
+                     
+                         $(obj).parent().parent().remove();
+                       
+                    })
+              
+                    //layer.close(index);
+                }
+            })
+
+        })
+    }
+
+
+    //查询验证
+    function search(){
+        //获取用户输入的查询条件
+        var v = $("#conValue").val();
+        //获取用户选择的查询
+        var con = $("#condition").val();
+        //判断用户选择的查询条件
+        if(con=="学号"){
+            //创建一个正则表达式对象
+            var re = /^[0-9]*$/;
+            //验证用户输入的信息是否是数字
+            if(re.test(v)){
+          		condition = con;
+          		conValue = v;
+          		loadData();
+          		
+            }else{
+                layer.alert("请输入数字")
+            }
+
+
+        }else{
+            	condition = con;
+          		conValue = v;
+          		loadData();
+        }
+    }
+
+</script>

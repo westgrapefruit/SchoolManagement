@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>欢迎页面-X-admin2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="../css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/xadmin.js"></script>
+    <script src="../js/my.js"></script>
+
+</head>
+
+<body>
+<div class="x-body" >
+    <form class="layui-form">
+       <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+                <span class="x-red">*</span>工号
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="tno"  name="tno"  required="" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>工号不可修改
+            </div>
+        </div>
+
+  		<div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+                <span class="x-red">*</span>姓名
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="tname"  name="tname"  required="" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>
+            </div>
+        </div>
+
+		<div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+                <span class="x-red">*</span>性别
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="tsex"  name="tsex"  required="" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>性别只能为男或女
+            </div>
+        </div>
+
+		  
+       
+
+		 <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+                <span class="x-red">*</span>职称
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="title"  name="title"  required="" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>助教，讲师，副教授，教授
+            </div>
+        </div>
+
+		 <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+                <span class="x-red">*</span>所属学院
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="college"  name="college"  required="" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+          
+        </div>
+
+		 <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+                <span class="x-red">*</span>学历
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="education"  name="education"  required="" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>硕士或者博士
+            </div>
+        </div>
+        
+         <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+                <span class="x-red">*</span>邮箱
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="mail"  name="mail"  required="" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+           
+        </div>
+
+		 <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+                <span class="x-red">*</span>电话号码
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="pnum"  name="pnum"  required="" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>11位电话号码
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+            </label>
+            <button  class="layui-btn" lay-filter="add" lay-submit="">
+                修改
+            </button>
+        </div>
+        <span id="info" style="color:red"></span>
+    </form>
+</div>
+<script>
+		//文档加载事件
+	$(function(){
+		//获取修改的传值url
+		var url = window.location.href;
+		var url2= decodeURI(url);
+		
+		//解析url
+		 dd = url2.split("=");
+	
+		$("#tno").val(dd[1].split("&")[0])
+		$("#tname").val(dd[2].split("&")[0])
+		
+		$("#tsex").val(dd[3].split("&")[0])
+		$("#title").val(dd[4].split("&")[0])
+		$("#college").val(dd[5].split("&")[0])
+		$("#education").val(dd[6].split("&")[0])
+		$("#mail").val(dd[7].split("&")[0])
+		$("#pnum").val(dd[8].split("&")[0])
+	})
+	
+    layui.use(['form','layer'], function(){
+        $ = layui.jquery;
+        var form = layui.form
+            ,layer = layui.layer;
+
+
+
+        //修改
+        form.on('submit(add)', function(data){
+            console.log(data);
+            $.ajax({
+                url:address+"/user/updteacher",
+                type:"post",
+                data:data.field,
+                dataType:"json",//返回的数据类型
+                success:function(data){
+                    //定义{info:"修改成功"}
+                    $("#info").text(data.info);
+
+                    if(data.info=="修改成功"){
+                        //关闭弹窗
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                        //刷新
+                        parent.window.location.href=parent.window.location.href;
+
+                    }
+
+
+                }
+
+            })
+            return false;
+        });
+
+
+});
+</script>
+<script>var _hmt = _hmt || []; (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();</script>
+</body>
+
+</html>
